@@ -1,8 +1,9 @@
 package com.github.idelstak.uno.card.game;
 
+import java.util.Comparator;
 import javafx.scene.paint.Color;
 
-class Card {
+class Card implements Comparable<Card> {
 
     enum Colored {
 
@@ -31,6 +32,16 @@ class Card {
 
     Color getColor() {
         return colored.getColor();
+    }
+
+    @Override
+    public int compareTo(Card otherCard) {
+        return Comparator.comparing(Card::toString).compare(this, otherCard);
+    }
+
+    @Override
+    public String toString() {
+        return colored.name();
     }
 
 }
