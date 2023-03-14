@@ -86,4 +86,12 @@ public class ModelTest {
         );
     }
 
+    @Test
+    public void a_new_deck_has_8_wild_cards() {
+        var deck = new Deck();
+        var wildCards = deck.getWildCards();
+
+        assertThat(wildCards, hasSize(8));
+    }
+
 }
