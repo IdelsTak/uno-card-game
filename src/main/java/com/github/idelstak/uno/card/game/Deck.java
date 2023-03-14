@@ -24,6 +24,7 @@ public final class Deck {
 
         cards.addAll(initNumberedCards());
         cards.addAll(initSpecialCards());
+        cards.addAll(initWildCards());
     }
 
     List<Card> getCards() {
@@ -74,6 +75,14 @@ public final class Deck {
                 );
     }
 
+    List<WildCard> getWildCards() {
+        return getCards()
+                .stream()
+                .filter(card -> card instanceof WildCard)
+                .map(WildCard.class::cast)
+                .toList();
+    }
+
     private static Collection<? extends Card> initNumberedCards() {
         return Stream
                 .concat(
@@ -110,6 +119,18 @@ public final class Deck {
                 .toList();
 
         return Stream.concat(specialCards.stream(), specialCards.stream()).toList();
+    }
+
+    private static Collection<? extends Card> initWildCards() {
+        var coloredsList = new LinkedList<Colored>(Arrays.asList(Colored.values()));
+        var wildCardsList = Stream.generate(coloredsList::pop)
+                .limit(coloredsList.size())
+                .filter(colored -> colored == Colored.BLACK)
+                .flatMap(colored -> Arrays.stream(WildCard.Type.values()).map(type -> new WildCard(colored, type)))
+                .toList();
+        var doubleWildCardsList = Stream.concat(wildCardsList.stream(), wildCardsList.stream()).toList();
+        
+       return Stream.concat(doubleWildCardsList.stream(), doubleWildCardsList.stream()).toList();
     }
 
 }
