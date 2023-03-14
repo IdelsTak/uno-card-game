@@ -8,10 +8,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
 import java.util.stream.Stream;
 import javafx.scene.paint.Color;
 
@@ -65,6 +68,20 @@ public final class Deck {
                 .stream()
                 .filter(card -> card.getNumber() == numbered.getNumber())
                 .toList();
+    }
+
+    Map<Integer, List<Colored>> getNumberedCardsColorMap() {
+        return getNumberedCards()
+                .stream()
+                .collect(
+                        groupingBy(
+                                NumberedCard::getNumber,
+                                collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().sorted().map(Card::getColored).toList()
+                                )
+                        )
+                );
     }
 
     private static Collection<? extends Card> initNumberedCards() {
