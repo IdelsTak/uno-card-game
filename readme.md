@@ -78,15 +78,45 @@ public void a_new_deck_contains_2_cards_numbered_1_to_9_for_each_color_except_bl
 }
 ```
 
-
-
 #### 24 Special cards
 
 ![special-cards](cards-screenshots/special-cards.png)
 
+```java
+@Test
+public void a_new_deck_has_24_special_cards() {
+    var deck = new Deck();
+    var specialCards = deck.getSpecialCards();
+
+    assertThat(specialCards, hasSize(24));
+}
+```
+
 - Skip Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
 - Reverse Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
 - Draw 2 Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
+
+```java
+@Test
+public void a_new_deck_has_2_special_cards_for_each_color_except_black() {
+    var deck = new Deck();
+    var specialCardsColorMap = deck.getSpecialCardsColorMap();
+    var coloredsList = Arrays.asList(Colored.values());
+    var doubleColoredsList = Stream.concat(coloredsList.stream(), coloredsList.stream())
+            .filter(colored -> colored != Colored.BLACK)
+            .sorted(Comparator.comparing(Colored::name))
+            .toList();
+
+    assertThat(
+            specialCardsColorMap,
+            allOf(
+                    hasEntry(SpecialCard.Type.DRAW_2, doubleColoredsList),
+                    hasEntry(SpecialCard.Type.REVERSE, doubleColoredsList),
+                    hasEntry(SpecialCard.Type.SKIP, doubleColoredsList)
+            )
+    );
+}
+```
 
 #### 8 Wild cards
 
