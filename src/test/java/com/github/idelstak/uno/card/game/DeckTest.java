@@ -12,6 +12,14 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
+    public void a_new_deck_has_108_cards() {
+        var deck = new Deck();
+        var cards = deck.getCards();
+
+        assertThat(cards, hasSize(108));
+    }
+
+    @Test
     public void a_new_deck_has_76_numbered_cards() {
         var deck = new Deck();
         var numberedCards = deck.getNumberedCards();
@@ -67,7 +75,7 @@ public class DeckTest {
     }
 
     @Test
-    public void a_new_deck_has_2_special_cards_for_each_color_except_black() {
+    public void a_new_deck_has_2_special_cards_types_for_each_color_except_black() {
         var deck = new Deck();
         var specialCardsColorMap = deck.getSpecialCardsColorMap();
         var coloredsList = Arrays.asList(Colored.values());
@@ -92,6 +100,25 @@ public class DeckTest {
         var wildCards = deck.getWildCards();
 
         assertThat(wildCards, hasSize(8));
+    }
+
+    @Test
+    public void a_new_deck_has_2_wild_cards_types_that_are_each_black() {
+        var deck = new Deck();
+        var wildCardsColorMap = deck.getWildCardsColorMap();
+        var coloredsList = Arrays.asList(Colored.values());
+        var doubleColoredsList = Stream.concat(coloredsList.stream(), coloredsList.stream())
+                .filter(colored -> colored == Colored.BLACK)
+                .toList();
+        var quadColoredsList = Stream.concat(doubleColoredsList.stream(), doubleColoredsList.stream()).toList();
+
+        assertThat(
+                wildCardsColorMap,
+                allOf(
+                        hasEntry(WildCard.Type.WILD, quadColoredsList),
+                        hasEntry(WildCard.Type.WILD_DRAW_4, quadColoredsList)
+                )
+        );
     }
 
 }
