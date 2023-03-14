@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;
 
-public class ModelTest {
+public class DeckTest {
 
     @Test
     public void a_new_deck_has_76_numbered_cards() {
