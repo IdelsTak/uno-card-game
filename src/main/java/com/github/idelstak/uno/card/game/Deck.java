@@ -9,14 +9,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
 import java.util.stream.Stream;
-import javafx.scene.paint.Color;
 
 public final class Deck {
 
@@ -26,17 +23,11 @@ public final class Deck {
         cards = new ArrayList<>();
 
         cards.addAll(initNumberedCards());
+        cards.addAll(initSpecialCards());
     }
 
     List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    Set<Color> getCardColors() {
-        return getCards()
-                .stream()
-                .map(Card::getColor)
-                .collect(Collectors.toSet());
     }
 
     List<NumberedCard> getNumberedCards() {
@@ -47,35 +38,34 @@ public final class Deck {
                 .toList();
     }
 
-    Optional<NumberedCard> getNumberedCard(Numbered numbered, Colored colored) {
-        return getNumberedCards()
-                .stream()
-                .filter(card -> card.getNumber() == numbered.getNumber())
-                .filter(card -> Objects.equals(card.getColor(), colored.getColor()))
-                .findFirst();
-    }
-
-    List<NumberedCard> getNumberedCards(Numbered numbered, Colored colored) {
-        return getNumberedCards()
-                .stream()
-                .filter(card -> card.getNumber() == numbered.getNumber())
-                .filter(card -> Objects.equals(card.getColor(), colored.getColor()))
-                .toList();
-    }
-
-    List<NumberedCard> getNumberedCards(Numbered numbered) {
-        return getNumberedCards()
-                .stream()
-                .filter(card -> card.getNumber() == numbered.getNumber())
-                .toList();
-    }
-
     Map<Integer, List<Colored>> getNumberedCardsColorMap() {
         return getNumberedCards()
                 .stream()
                 .collect(
                         groupingBy(
                                 NumberedCard::getNumber,
+                                collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().sorted().map(Card::getColored).toList()
+                                )
+                        )
+                );
+    }
+
+    List<SpecialCard> getSpecialCards() {
+        return getCards()
+                .stream()
+                .filter(card -> card instanceof SpecialCard)
+                .map(SpecialCard.class::cast)
+                .toList();
+    }
+
+    Map<SpecialCard.Type, List<Colored>> getSpecialCardsColorMap() {
+        return getSpecialCards()
+                .stream()
+                .collect(
+                        groupingBy(
+                                SpecialCard::getType,
                                 collectingAndThen(
                                         Collectors.toList(),
                                         list -> list.stream().sorted().map(Card::getColored).toList()
@@ -109,6 +99,17 @@ public final class Deck {
                 .stream(Numbered.values())
                 .filter(numbered -> optionalNumbered.map(value -> numbered != value).orElse(true))
                 .map(numbered -> new NumberedCard(colored, numbered));
+    }
+
+    private static Collection<? extends Card> initSpecialCards() {
+        var coloreds = new LinkedList<Colored>(Arrays.asList(Colored.values()));
+        var specialCards = Stream.generate(coloreds::pop)
+                .limit(coloreds.size())
+                .filter(colored -> colored != Colored.BLACK)
+                .flatMap(colored -> Arrays.stream(SpecialCard.Type.values()).map(type -> new SpecialCard(colored, type)))
+                .toList();
+
+        return Stream.concat(specialCards.stream(), specialCards.stream()).toList();
     }
 
 }
