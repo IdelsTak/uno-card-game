@@ -6,7 +6,19 @@ To be the first player to get rid of all your cards.
 
 ### Deck
 
-The Uno deck contains 108 cards, which includes 76 numbered, 24 special, and 8 wild cards:
+The Uno deck contains 108 cards
+
+```java
+@Test
+public void a_new_deck_has_108_cards() {
+    var deck = new Deck();
+    var cards = deck.getCards();
+
+    assertThat(cards, hasSize(108));
+}
+```
+
+They include 76 numbered, 24 special, and 8 wild cards:
 
 #### 76 Number cards
 
@@ -134,6 +146,27 @@ public void a_new_deck_has_8_wild_cards() {
 
 - 4 Wild cards (each black)
 - 4 Wild Draw 4 cards (each black)
+
+```java
+@Test
+public void a_new_deck_has_2_wild_cards_types_that_are_each_black() {
+    var deck = new Deck();
+    var wildCardsColorMap = deck.getWildCardsColorMap();
+    var coloredsList = Arrays.asList(Colored.values());
+    var doubleColoredsList = Stream.concat(coloredsList.stream(), coloredsList.stream())
+            .filter(colored -> colored == Colored.BLACK)
+            .toList();
+    var quadColoredsList = Stream.concat(doubleColoredsList.stream(), doubleColoredsList.stream()).toList();
+
+    assertThat(
+            wildCardsColorMap,
+            allOf(
+                    hasEntry(WildCard.Type.WILD, quadColoredsList),
+                    hasEntry(WildCard.Type.WILD_DRAW_4, quadColoredsList)
+            )
+    );
+}
+```
 
 ### Setup
 
