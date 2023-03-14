@@ -23,6 +23,22 @@ public void a_new_deck_contains_76_numbered_cards() {
 ```
 
 - `0 `: 1 card for each color = 4 cards
+
+```java
+@Test
+public void a_new_deck_contains_a_card_numbered_0_for_each_color_except_black() {
+    var deck = new Deck();
+    var numberCardsColorMap = deck.getNumberedCardsColorMap();
+    var colorsList = Arrays.asList(Colored.values())
+            .stream()
+            .filter(colored -> colored != Colored.BLACK)
+            .sorted(Comparator.comparing(Colored::name))
+            .toList();
+
+    assertThat(numberCardsColorMap, hasEntry(Numbered.ZERO.getNumber(), colorsList));
+}
+```
+
 - `1`: 2 cards for each color = 8 cards
 - `2`: 2 cards for each color = 8 cards
 - `3`: 2 cards for each color = 8 cards
@@ -32,6 +48,37 @@ public void a_new_deck_contains_76_numbered_cards() {
 - `7`: 2 cards for each color = 8 cards
 - `8`: 2 cards for each color = 8 cards
 - `9`: 2 cards for each color = 8 cards
+
+```java
+@Test
+public void a_new_deck_contains_2_cards_numbered_1_to_9_for_each_color_except_black() {
+    var deck = new Deck();
+    var numberCardsColorMap = deck.getNumberedCardsColorMap();
+    var coloredsList = Arrays.asList(Colored.values());
+    var coloredsStream = Stream.concat(coloredsList.stream(), coloredsList.stream());
+    var doubleColorsList = coloredsStream
+            .filter(colored -> colored != Colored.BLACK)
+            .sorted(Comparator.comparing(Colored::name))
+            .toList();
+
+    assertThat(
+            numberCardsColorMap,
+            allOf(
+                    hasEntry(Numbered.ONE.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.TWO.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.THREE.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.FOUR.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.FIVE.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.SIX.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.SEVEN.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.EIGHT.getNumber(), doubleColorsList),
+                    hasEntry(Numbered.NINE.getNumber(), doubleColorsList)
+            )
+    );
+}
+```
+
+
 
 #### 24 Special cards
 
