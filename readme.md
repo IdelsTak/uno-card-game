@@ -1,7 +1,3 @@
----
-typora-copy-images-to: ./cards-screenshots
----
-
 # Uno Card Game
 
 ### Objective of the Game
