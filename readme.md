@@ -12,7 +12,7 @@ The Uno deck contains 108 cards, which includes four suits: red, yellow, green, 
 
 Shuffle the deck and deal 7 cards to each player. Place the remaining cards face down on the table to create a draw pile. Flip the top card over to create a discard pile.
 
-### Gameplay
+### Game-play
 
 The player to the left of the dealer goes first. They must either match the color or the number of the card on the top of the discard pile. If they cannot play a card, they must draw one card from the draw pile. If they can play the card drawn, they may do so, otherwise their turn ends.
 
