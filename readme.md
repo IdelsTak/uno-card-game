@@ -1,3 +1,7 @@
+---
+typora-copy-images-to: ./cards-screenshots
+---
+
 # Uno Card Game
 
 ### Objective of the Game
@@ -6,7 +10,36 @@ To be the first player to get rid of all your cards.
 
 ### Deck
 
-The Uno deck contains 108 cards, which includes four suits: red, yellow, green, and blue. Each suit contains 25 cards, with numbers ranging from 0 to 9, as well as special action cards.
+The Uno deck contains 108 cards, which includes 76 numbered, 24 special, and 8 wild cards:
+
+#### 76 Number cards
+
+![numbered-cards](cards-screenshots/numbered-cards.png)
+- `0 `: 1 card for each color = 4 cards
+- `1`: 2 cards for each color = 8 cards
+- `2`: 2 cards for each color = 8 cards
+- `3`: 2 cards for each color = 8 cards
+- `4`: 2 cards for each color = 8 cards
+- `5`: 2 cards for each color = 8 cards
+- `6`: 2 cards for each color = 8 cards
+- `7`: 2 cards for each color = 8 cards
+- `8`: 2 cards for each color = 8 cards
+- `9`: 2 cards for each color = 8 cards
+
+#### 24 Special cards
+
+![special-cards](cards-screenshots/special-cards.png)
+
+- Skip Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
+- Reverse Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
+- Draw 2 Card (2 red, 2 yellow, 2 green, and 2 blue) = 8 cards
+
+#### 8 Wild cards
+
+![wild-cards](cards-screenshots/wild-cards.png)
+
+- 4 Wild cards (each black)
+- 4 Wild Draw 4 cards (each black)
 
 ### Setup
 
