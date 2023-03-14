@@ -24,10 +24,15 @@ class Card implements Comparable<Card> {
         }
 
     }
+
     protected final Colored colored;
 
     Card(Colored colored) {
         this.colored = colored;
+    }
+
+    Colored getColored() {
+        return colored;
     }
 
     Color getColor() {
