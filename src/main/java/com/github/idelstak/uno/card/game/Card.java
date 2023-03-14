@@ -35,10 +35,6 @@ class Card implements Comparable<Card> {
         return colored;
     }
 
-    Color getColor() {
-        return colored.getColor();
-    }
-
     @Override
     public int compareTo(Card otherCard) {
         return Comparator.comparing(Card::toString).compare(this, otherCard);
