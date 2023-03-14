@@ -83,6 +83,20 @@ public final class Deck {
                 .toList();
     }
 
+    Map<WildCard.Type, List<Colored>> getWildCardsColorMap() {
+        return getWildCards()
+                .stream()
+                .collect(
+                        groupingBy(
+                                WildCard::getType,
+                                collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream().map(Card::getColored).toList()
+                                )
+                        )
+                );
+    }
+
     private static Collection<? extends Card> initNumberedCards() {
         return Stream
                 .concat(
@@ -129,8 +143,8 @@ public final class Deck {
                 .flatMap(colored -> Arrays.stream(WildCard.Type.values()).map(type -> new WildCard(colored, type)))
                 .toList();
         var doubleWildCardsList = Stream.concat(wildCardsList.stream(), wildCardsList.stream()).toList();
-        
-       return Stream.concat(doubleWildCardsList.stream(), doubleWildCardsList.stream()).toList();
+
+        return Stream.concat(doubleWildCardsList.stream(), doubleWildCardsList.stream()).toList();
     }
 
 }
