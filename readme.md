@@ -122,6 +122,16 @@ public void a_new_deck_has_2_special_cards_for_each_color_except_black() {
 
 ![wild-cards](cards-screenshots/wild-cards.png)
 
+```java
+@Test
+public void a_new_deck_has_8_wild_cards() {
+    var deck = new Deck();
+    var wildCards = deck.getWildCards();
+
+    assertThat(wildCards, hasSize(8));
+}
+```
+
 - 4 Wild cards (each black)
 - 4 Wild Draw 4 cards (each black)
 
