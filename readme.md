@@ -11,6 +11,17 @@ The Uno deck contains 108 cards, which includes 76 numbered, 24 special, and 8 w
 #### 76 Number cards
 
 ![numbered-cards](cards-screenshots/numbered-cards.png)
+
+```java
+@Test
+public void a_new_deck_contains_76_numbered_cards() {
+    var deck = new Deck();
+    var numberedCards = deck.getNumberedCards();
+
+    assertThat(numberedCards, hasSize(76));
+}
+```
+
 - `0 `: 1 card for each color = 4 cards
 - `1`: 2 cards for each color = 8 cards
 - `2`: 2 cards for each color = 8 cards
